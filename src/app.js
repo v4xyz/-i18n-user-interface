@@ -4,7 +4,9 @@ const koaBody = require('koa-body');
 const Koa = require('koa');
 const app = module.exports = new Koa();
 const serverPort = 3300;
-console.log(require('./data-source/reducers'));
+const dataSource = require('./data-source');
+console.log(dataSource.getState());
+
 // middleware
 // 记录日志
 app.use(logger());
