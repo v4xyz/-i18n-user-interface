@@ -1,14 +1,10 @@
 const logger = require('koa-logger');
 const router = require('koa-router')();
 const koaBody = require('koa-body');
-
 const Koa = require('koa');
 const app = module.exports = new Koa();
-const serverPort = 3300
-// "database"
-
-const posts = [];
-
+const serverPort = 3300;
+console.log(require('./data-source/reducers'));
 // middleware
 // 记录日志
 app.use(logger());
@@ -24,12 +20,9 @@ app.use(async (ctx, next) => {
 // route definitions
 
 router.get('/', index)
-  .post('/i18n/langCodeList', getLangCodeList)
-  .post('/i18n/langDictList', getLangDictList)
-  .post('/i18n/i8nItemList', getLangItemList)
-  .get('/post/new', add)
-  .get('/post/:id', show)
-  .post('/post', create);
+  .post('/langCodeList', getLangCodeList)
+  .post('/langDictList', getLangDictList)
+  .post('/i8nItemList', getLangItemList);
 
 app.use(router.routes());
 
@@ -88,46 +81,12 @@ async function getLangItemList(ctx) {
   })
 }
 
-/**
- * Post listing.
- */
-
 async function index(ctx) {  
   ctx.type = 'text/html; charset=utf-8';
   ctx.body = 'i18n service is running...'
 }
 
-/**
- * Show creation form.
- */
-
-async function add(ctx) {
-  ctx.redirect('/');
-}
-
-
-/**
- * Show post :id.
- */
-
-async function show(ctx) {
-  const id = ctx.params.id;
-  const post = posts[id];
-  if (!post) ctx.throw(404, 'invalid post id');
-  // await ctx.render('show', { post: post });
-}
-
-/**
- * Create a post.
- */
-
-async function create(ctx) {
-
-  ctx.redirect('/');
-}
-
 // listen
-
 if (!module.parent) {
   app.listen(serverPort);
   console.log('i18n service start at loacl port: ' + serverPort);

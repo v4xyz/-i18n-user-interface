@@ -2,9 +2,10 @@
   "name": "i18n-user-interface",
   "version": "1.0.0",
   "description": "a common multi language maintenance platform",
-  "main": "index.js",
+  "main": "src/app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/app.js"
   },
   "repository": {
     "type": "git",
@@ -16,6 +17,9 @@
     "koa": "^2.7.0",
     "koa-body": "^4.1.0",
     "koa-logger": "^3.2.0",
-    "koa-router": "^7.4.0"
+    "koa-router": "^7.4.0",
+    "redux": "^4.0.4",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.3.0"
   }
 }
