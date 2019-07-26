@@ -1,11 +1,16 @@
 const { ACTION_TYPE } = require('./actions');
 
-const langCodeState = {
-	list: [{a:1}, {a:2}]
-};
+function langCode(state = {}, action) {
+	const actions = {
+		[ACTION_TYPE.DATABASE_LOADED]: () => {
+			return action.data
+		},
+		default: () => {
+			return state
+		}
+	}
 
-function langCode(state = langCodeState, action) {
-	return state
+	return (actions[action.type] || actions['default'])()
 }
 
 module.exports = {

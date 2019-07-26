@@ -5,7 +5,9 @@ const Koa = require('koa');
 const app = module.exports = new Koa();
 const serverPort = 3300;
 const dataSource = require('./data-source');
-console.log(dataSource.getState());
+const { ACTIONS } = require('./data-source/actions');
+
+dataSource.dispatch(ACTIONS.loadDbData())
 
 // middleware
 // 记录日志
@@ -30,31 +32,7 @@ app.use(router.routes());
 
 async function getLangCodeList(ctx) {
 
-  ctx.body = JSON.stringify({
-     "success":true,
-     "obj":{
-        "total":4,
-        "pages":1,
-        "rows":[
-          {
-             "langCode": "zh_CN",
-             "langArea": "中文-简体"
-          },
-          {
-             "langCode": "zh_HK",
-             "langArea": "中文-繁體"
-          },
-          {
-             "langCode": "en_US",
-             "langArea": "English"
-          },
-          {
-             "langCode": "ja",
-             "langArea": "日本语"
-          }
-        ]
-     }
-  })
+  ctx.body = dataSource.dispatch(ACTIONS.getLangCodeList(ctx.req.body));
 }
 
 async function getLangDictList(ctx) {

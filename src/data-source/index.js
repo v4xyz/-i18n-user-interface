@@ -1,6 +1,12 @@
-const { createStore, combineReducers } = require('redux');
-const reduxThunk = require('redux-thunk');
-const reduxLogger = require('redux-logger');
-const reducers = require('./reducers')
+const { createStore, combineReducers, applyMiddleware } = require('redux');
+const thunk = require('redux-thunk').default;
+const logger = require('redux-logger').default;
+const reducers = require('./reducers');
+// redux中间件
+const middleWares = [
+	thunk,
+	// logger,
+];
+const store = createStore(combineReducers(reducers), applyMiddleware(...middleWares));
 
-module.exports = createStore(combineReducers(reducers));
+module.exports = store;
