@@ -3,12 +3,10 @@ const router = require('koa-router')();
 const koaBody = require('koa-body');
 const Koa = require('koa');
 const app = module.exports = new Koa();
+const controller = require('./controller');
 const serverPort = 3300;
-const dataSource = require('./data-source');
-const { ACTIONS } = require('./data-source/actions');
 
-dataSource.dispatch(ACTIONS.loadDbData())
-
+controller.loadDb();
 // middleware
 // 记录日志
 app.use(logger());
@@ -31,8 +29,9 @@ router.get('/', index)
 app.use(router.routes());
 
 async function getLangCodeList(ctx) {
+  const params = ctx.request.body;
 
-  ctx.body = dataSource.dispatch(ACTIONS.getLangCodeList(ctx.req.body));
+  ctx.body = await controller.getLangCodeList(params);
 }
 
 async function getLangDictList(ctx) {

@@ -19,7 +19,8 @@ const ACTIONS = {
 				const langCodeData = db.model('LangCode').toArray();
 				const schema_langCode = new schema.Entity('langCode', undefined, {idAttribute: 'langCode'});
 				const normalizedData = normalize(langCodeData, [schema_langCode]);	
-				ACTIONS
+				
+				console.log('database loaded ...');
 				dispatch({
 					type: ACTION_TYPE.DATABASE_LOADED,
 					data: normalizedData
