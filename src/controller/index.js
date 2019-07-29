@@ -1,17 +1,11 @@
+const { denormalize, schema } = require('normalizr');
 const dataSource = require('../data-source');
-const { ACTIONS, ACTION_TYPE } = require('../data-source/actions');
+const { SCHEMAS, ACTIONS, ACTION_TYPE } = require('../data-source/actions');
 const listeners = [];
 const unsubscribe = dataSource.subscribe(() => {
 	const state = dataSource.getState();
 
-	listeners
-		.filter(listener => !listener.invoked)
-		.forEach(listener => {
-
-			listener(state)
-			listener.invoked = true
-		});
-
+	console.log('公共监听器已经触发...');
 });
 
 // 载入数据库文件
@@ -23,11 +17,16 @@ function loadDb() {
 // 获取语种列表
 function getLangCodeList(params) {
 
-	return new Promise((resolve, reject) => {		
-		listeners.push(resolve);
-		console.log(listeners.filter(listener => !listener.invoked).length)
+	return new Promise((resolve, reject) => {
+
+		const unsubscribe = dataSource.subscribe(() => {
+			const { langCode : { result, entities } } = dataSource.getState()
+			console.log(dataSource.getState())
+			resolve(denormalize(result, [SCHEMAS.langCode], entities));
+			// resolve(dataSource.getState());
+			unsubscribe();
+		});
 		dataSource.dispatch(ACTIONS.getLangCodeList(params));
-		// resolve(dataSource.getState());
 	});
 }
 
