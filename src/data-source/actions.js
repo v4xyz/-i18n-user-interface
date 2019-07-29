@@ -9,6 +9,7 @@ const ACTION_TYPE = [
 	'GET_LANG_CODE_DETAIL',       // 获取语种详情
 	'ADD_LANG_CODE',       // 新增辑语种详情
 	'UPDATE_LANG_CODE',    // 编辑语种详情
+	'ERROR_ADD_DUPLICATE_LANG_CODE', // 不能新增重复的langCode
 	'DELETE_LANG_CODE',    // 删除语种详情
 ].reduce((acc, item) => {
 	acc[item] = item
@@ -44,10 +45,23 @@ const ACTIONS = {
 	// 新增语种
 	addLangCode: (params) => {
 
-		return {
-			type: ACTION_TYPE.ADD_LANG_CODE,
-			params
-		};	
+		return (dispatch, getState) => {
+			const state = getState();
+			const { langCode: {entities, result} } = state;
+
+			if (result.includes(params.langCode)) {
+				// 不能新增重复的langCode
+				dispatch({
+					type: ACTION_TYPE.ERROR_ADD_DUPLICATE_LANG_CODE,
+					params
+				});
+			} else {
+				dispatch({
+					type: ACTION_TYPE.ADD_LANG_CODE,
+					params
+				});
+			}
+		};
 	},	
 	// 编辑语种
 	editLangCode: (params) => {
