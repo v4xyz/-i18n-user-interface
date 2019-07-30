@@ -20,7 +20,7 @@ function langCode(state = {}, action) {
 					...state.entities,
 					list: {
 						...state.entities.list,
-						[updatedId]: {...updatedItem, ...action.params}
+						[updatedId]: {...action.params}
 					}
 				},
 				result: [...state.result, updatedId],
