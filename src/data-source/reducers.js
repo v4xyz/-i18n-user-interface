@@ -120,7 +120,7 @@ function langItem(state = {}, action) {
 			return state;
 		},
 		[ACTION_TYPE.ADD_LANG_ITEM]: () => {
-			const updatedId = action.params.langItem
+			const updatedId = action.params.langItem;
 
 			return {
 				...state,
@@ -134,6 +134,28 @@ function langItem(state = {}, action) {
 				result: [...state.result, updatedId],
 			};
 		},
+		// 批量新增词条
+		[ACTION_TYPE.BATCH_ADD_LANG_ITEM]: () => {
+			const langItems = action.params.langItems;
+			const updatedIds = langItems.map(item => item.itemId);
+			const newList = langItems.reduce((acc, item) => {
+				acc[item.itemId] = item
+
+				return acc;
+			}, {});
+
+			return {
+				...state,
+				entities: {
+					...state.entities,
+					list: {
+						...state.entities.list,
+						...newList,
+					}
+				},
+				result: [...state.result, ...updatedIds],
+			};
+		},		
 		[ACTION_TYPE.UPDATE_LANG_ITEM]: () => {
 			const updatedId = action.params.langItem
 			const updatedItem = state.entities.list[updatedId];

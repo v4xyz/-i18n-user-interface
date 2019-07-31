@@ -149,7 +149,7 @@ function getLangCategoryDetail(params) {
 		const unsubscribe = store.subscribe(() => {
 			const { langCategory : { result, entities } } = store.getState()
 			console.log(store.getState())
-			resolve(entities.list[params.langCategory] || {});
+			resolve(entities.list[params.prefix] || {});
 			unsubscribe();
 		});
 		store.dispatch(ACTIONS.getLangCategoryDetail(params));

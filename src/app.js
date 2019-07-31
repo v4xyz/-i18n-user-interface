@@ -16,6 +16,16 @@ app.use(koaBody());
 app.use(async (ctx, next) => {
 
   await next();
+  const rows = ctx.body.rows;
+  // 屏蔽_id等字段 
+  if (Array.isArray(rows)) {
+    ctx.body.rows = rows.map(item => {
+      const newItem = { ...item };
+      delete newItem._id;
+
+      return newItem;
+    })
+  }
   ctx.body = {
      "success":true,
      "obj": ctx.body,

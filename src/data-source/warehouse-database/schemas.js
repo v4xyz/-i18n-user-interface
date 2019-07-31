@@ -14,15 +14,17 @@ module.exports = {
 	// 词条分类
 	LangCategory: {
 		name: {type: String, required: true},
-		prefix: {type: String, required: false, default: ''},
+		prefix: {type: String, required: false},
 		itemId: {type: String, required: false, default: ''},
 	},
 	// i18n词条
-	LangItem: {
-		langCode: {type: String, required: true},
+	LangItem: {		
 		itemId: {type: String, required: true},
-		value: {type: String, required: false, default: ''},
-		alias: {type: String, required: false, default: ''},
+		data: {type: Object, required: false},
+		category: {type: String, required: false},
+		moduleId: {type: String, required: false},
+		pageId: {type: String, required: false},
+		alias: {type: String, required: false},
 	},
 	// 术语词典
 	LangDict: {},
