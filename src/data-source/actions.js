@@ -39,9 +39,9 @@ const ACTIONS = {
 				const langCodeData = DB_MODEL['LangCode'].toArray();
 				const langCategoryData = DB_MODEL['LangCategory'].toArray();
 				const langItemData = DB_MODEL['LangItem'].toArray();
-				const langCode = normalize(langCodeData, [SCHEMAS.langCode]);	
-				const langCategory = normalize(langCodeData, [SCHEMAS.langCode]);	 
-				const langItem = normalize(langCodeData, [SCHEMAS.langCode]);	 
+				const langCode = normalize(langCodeData, [SCHEMAS.langCode]);
+				const langCategory = normalize(langCategoryData, [SCHEMAS.langCategory]);
+				const langItem = normalize(langItemData, [SCHEMAS.langItem]);
 				
 				console.log('database loaded ...');
 				dispatch({

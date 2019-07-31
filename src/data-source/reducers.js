@@ -55,6 +55,7 @@ function langCode(state = {}, action) {
 
 // 词条分类
 function langCategory(state = {}, action) {
+	const keyField = 'prefix';
 	const actions = {
 		[ACTION_TYPE.DATABASE_LOADED]: () => {
 			return action.params.langCategory;
@@ -66,7 +67,7 @@ function langCategory(state = {}, action) {
 			return state;
 		},
 		[ACTION_TYPE.ADD_LANG_CATEGORY]: () => {
-			const updatedId = action.params.langCategory
+			const updatedId = action.params[keyField];
 
 			return {
 				...state,
@@ -81,7 +82,7 @@ function langCategory(state = {}, action) {
 			};
 		},
 		[ACTION_TYPE.UPDATE_LANG_CATEGORY]: () => {
-			const updatedId = action.params.langCategory
+			const updatedId = action.params[keyField];
 			const updatedItem = state.entities.list[updatedId];
 
 			return {

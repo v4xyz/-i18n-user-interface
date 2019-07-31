@@ -14,7 +14,7 @@ module.exports = {
 	// 词条分类
 	LangCategory: {
 		name: {type: String, required: true},
-		prefix: {type: String, required: true},
+		prefix: {type: String, required: false, default: ''},
 		itemId: {type: String, required: false, default: ''},
 	},
 	// i18n词条

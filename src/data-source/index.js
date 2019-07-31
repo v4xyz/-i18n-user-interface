@@ -124,10 +124,10 @@ function getLangCategoryList(params) {
 	return new Promise((resolve, reject) => {
 
 		const unsubscribe = store.subscribe(() => {
-			const { langCode : { result, entities } } = store.getState()
+			const { langCategory : { result, entities } } = store.getState()
 			console.log(store.getState())
 			resolve(util.formatListResp({
-				list: denormalize(result, [SCHEMAS.langCode], entities),
+				list: denormalize(result, [SCHEMAS.langCategory], entities),
 				total: result.length,
 				params,
 			}));
@@ -147,9 +147,9 @@ function getLangCategoryDetail(params) {
 	return new Promise((resolve, reject) => {
 
 		const unsubscribe = store.subscribe(() => {
-			const { langCode : { result, entities } } = store.getState()
+			const { langCategory : { result, entities } } = store.getState()
 			console.log(store.getState())
-			resolve(entities.list[params.langCode] || {});
+			resolve(entities.list[params.langCategory] || {});
 			unsubscribe();
 		});
 		store.dispatch(ACTIONS.getLangCategoryDetail(params));
@@ -166,9 +166,9 @@ function addLangCategory(params) {
 	return new Promise((resolve, reject) => {
 
 		const unsubscribe = store.subscribe(() => {
-			const { langCode : { result, entities } } = store.getState()
+			const { langCategory : { result, entities } } = store.getState()
 			console.log(store.getState())
-			resolve(entities.list[params.langCode] || {});
+			resolve(entities.list[params.langCategory] || {});
 			unsubscribe();
 		});
 		store.dispatch(ACTIONS.addLangCategory(params));
@@ -185,9 +185,9 @@ function editLangCategory(params) {
 	return new Promise((resolve, reject) => {
 
 		const unsubscribe = store.subscribe(() => {
-			const { langCode : { result, entities } } = store.getState()
+			const { langCategory : { result, entities } } = store.getState()
 			console.log(store.getState())
-			resolve(entities.list[params.langCode] || {});
+			resolve(entities.list[params.langCategory] || {});
 			unsubscribe();
 		});
 		store.dispatch(ACTIONS.editLangCategory(params));
@@ -216,10 +216,10 @@ function getLangItemList(params) {
 	return new Promise((resolve, reject) => {
 
 		const unsubscribe = store.subscribe(() => {
-			const { langCode : { result, entities } } = store.getState()
+			const { langItem : { result, entities } } = store.getState()
 			console.log(store.getState())
 			resolve(util.formatListResp({
-				list: denormalize(result, [SCHEMAS.langCode], entities),
+				list: denormalize(result, [SCHEMAS.langItem], entities),
 				total: result.length,
 				params,
 			}));
@@ -239,9 +239,9 @@ function getLangItemDetail(params) {
 	return new Promise((resolve, reject) => {
 
 		const unsubscribe = store.subscribe(() => {
-			const { langCode : { result, entities } } = store.getState()
+			const { langItem : { result, entities } } = store.getState()
 			console.log(store.getState())
-			resolve(entities.list[params.langCode] || {});
+			resolve(entities.list[params.langItem] || {});
 			unsubscribe();
 		});
 		store.dispatch(ACTIONS.getLangItemDetail(params));
@@ -258,9 +258,9 @@ function addLangItem(params) {
 	return new Promise((resolve, reject) => {
 
 		const unsubscribe = store.subscribe(() => {
-			const { langCode : { result, entities } } = store.getState()
+			const { langItem : { result, entities } } = store.getState()
 			console.log(store.getState())
-			resolve(entities.list[params.langCode] || {});
+			resolve(entities.list[params.langItem] || {});
 			unsubscribe();
 		});
 		store.dispatch(ACTIONS.addLangItem(params));
