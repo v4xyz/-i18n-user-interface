@@ -140,6 +140,11 @@ async function delLangItem(ctx) {
 }
 /***---i18n词条   end---***/
 
+async function index(ctx) {  
+  ctx.type = 'text/html; charset=utf-8';
+  ctx.body = 'i18n service is running...'
+}
+
 // listen
 if (!module.parent) {
   app.listen(serverPort);

@@ -117,6 +117,169 @@ const ACTIONS = {
 			})
 		};	
 	},
+	// 删除语种
+	delLangCode: (params) => {
+
+		return (dispatch, getState) => {
+			const state = getState();
+			const { langCode: {result, entities} } = state;
+
+			dispatch({
+				type: ACTION_TYPE.DELETE_LANG_CODE,
+				params
+			})
+		};	
+	},
+	// 获取词条分类列表
+	getLangCategoryList: (params) => {
+
+		return {
+			type: ACTION_TYPE.GET_LANG_CATEGORY_LIST,
+			params
+		};	
+	},
+	// 获取词条分类详情
+	getLangCategoryDetail: (params) => {
+
+		return {
+			type: ACTION_TYPE.GET_LANG_CATEGORY_DETAIL,
+			params
+		};	
+	},	
+	// 新增词条分类
+	addLangCategory: (params) => {
+
+		return (dispatch, getState) => {
+			const state = getState();
+			const { langCategory: {entities, result} } = state;
+
+			if (result.includes(params.langCategory)) {
+				// 不能新增重复的langCategory
+				dispatch({
+					type: ACTION_TYPE.ERROR_ADD_DUPLICATE_LANG_CATEGORY,
+					params
+				});
+			} else {
+				DB_MODEL['LangCategory'].insert(params)
+					.then(data => {
+						// 更新数据库存储
+						db.save();
+					});
+
+				dispatch({
+					type: ACTION_TYPE.ADD_LANG_CATEGORY,
+					params
+				});
+			}
+		};
+	},	
+	// 编辑词条分类
+	editLangCategory: (params) => {
+
+		return (dispatch, getState) => {
+			const state = getState();
+			const { langCategory: {result, entities} } = state;
+
+			DB_MODEL['LangCategory'].updateById(entities.list[params.langCategory]._id, params)
+				.then(data => {
+					// 更新数据库存储
+					db.save();
+				});
+
+			dispatch({
+				type: ACTION_TYPE.UPDATE_LANG_CATEGORY,
+				params
+			})
+		};	
+	},
+	// 删除词条分类
+	delLangCategory: (params) => {
+
+		return (dispatch, getState) => {
+			const state = getState();
+			const { langCategory: {result, entities} } = state;
+
+			dispatch({
+				type: ACTION_TYPE.DELETE_LANG_CATEGORY,
+				params
+			})
+		};	
+	},
+	// 获取i18词条列表
+	getLangItemList: (params) => {
+
+		return {
+			type: ACTION_TYPE.GET_LANG_ITEM_LIST,
+			params
+		};	
+	},
+	// 获取i18词条详情
+	getLangItemDetail: (params) => {
+
+		return {
+			type: ACTION_TYPE.GET_LANG_ITEM_DETAIL,
+			params
+		};	
+	},	
+	// 新增i18词条
+	addLangItem: (params) => {
+
+		return (dispatch, getState) => {
+			const state = getState();
+			const { langItem: {entities, result} } = state;
+
+			if (result.includes(params.langItem)) {
+				// 不能新增重复的langItem
+				dispatch({
+					type: ACTION_TYPE.ERROR_ADD_DUPLICATE_LANG_ITEM,
+					params
+				});
+			} else {
+				DB_MODEL['LangItem'].insert(params)
+					.then(data => {
+						// 更新数据库存储
+						db.save();
+					});
+
+				dispatch({
+					type: ACTION_TYPE.ADD_LANG_ITEM,
+					params
+				});
+			}
+		};
+	},	
+	// 编辑i18词条
+	editLangItem: (params) => {
+
+		return (dispatch, getState) => {
+			const state = getState();
+			const { langItem: {result, entities} } = state;
+
+			DB_MODEL['LangCode'].updateById(entities.list[params.langItem]._id, params)
+				.then(data => {
+					// 更新数据库存储
+					db.save();
+				});
+
+			dispatch({
+				type: ACTION_TYPE.UPDATE_LANG_ITEM,
+				params
+			})
+		};	
+	},
+	// 删除i18词条
+	delLangItem: (params) => {
+
+		return (dispatch, getState) => {
+			const state = getState();
+			const { langItem: {result, entities} } = state;
+
+			dispatch({
+				type: ACTION_TYPE.DELETE_LANG_ITEM,
+				params
+			})
+		};	
+	},
 }
 
 module.exports = {
