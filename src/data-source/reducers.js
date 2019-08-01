@@ -157,7 +157,7 @@ function langItem(state = {}, action) {
 			};
 		},		
 		[ACTION_TYPE.UPDATE_LANG_ITEM]: () => {
-			const updatedId = action.params.langItem
+			const updatedId = action.params.itemId
 			const updatedItem = state.entities.list[updatedId];
 
 			return {

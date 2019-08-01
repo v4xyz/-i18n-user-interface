@@ -241,7 +241,7 @@ function getLangItemDetail(params) {
 		const unsubscribe = store.subscribe(() => {
 			const { langItem : { result, entities } } = store.getState()
 			console.log(store.getState())
-			resolve(entities.list[params.langItem] || {});
+			resolve(entities.list[params.itemId] || {});
 			unsubscribe();
 		});
 		store.dispatch(ACTIONS.getLangItemDetail(params));

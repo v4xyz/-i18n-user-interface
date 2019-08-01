@@ -11,9 +11,7 @@ const schemas = require('./schemas');
 const db = new Database({path: DB_PATH, version: DB_VERSION});
 const langCatSchema = new Schema(schemas.LangCategory);
 const langItemSchema = new Schema(schemas.LangItem);
-langItemSchema.virtual('id').get(function() {
-	return `${this.itemId}-${this.langCode}`;
-});
+
 const DB_MODEL = {
 	// 语种编码
 	LangCode: db.model('LangCode', new Schema(schemas.LangCode)),

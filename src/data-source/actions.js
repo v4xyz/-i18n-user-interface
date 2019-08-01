@@ -30,6 +30,35 @@ const ACTION_TYPE = [
 	return acc
 }, {});
 
+/**
+ * 处理词条报文
+ * @param  {[type]} params [description]
+ * @return {[type]}        [description]
+ */
+function hanleLangItems(params) {
+	const { category, moduleId, pageId } = params;
+	const langItems = params.langItems.map((item) => {
+		const { itemId } = item;
+		delete item.itemId;
+		const langCodes = Object.keys(item);
+		const data = langCodes.reduce((acc, langCode) => {
+			acc[langCode] = item[langCode];
+
+			return acc;
+		}, {});
+
+		return {				
+			itemId,
+			category,
+			moduleId,
+			pageId,
+			data,
+		};
+	});
+
+	return langItems
+}
+
 const ACTIONS = {
 	// 载入数据库数据
 	loadDb: (params) => {
@@ -224,26 +253,7 @@ const ACTIONS = {
 	},
 	// 新增i18词条
 	addLangItem: (params) => {
-		const { category, moduleId, pageId } = params;
-		const langItems = params.langItems.map((item) => {
-			const { itemId } = item;
-			delete item.itemId;
-			const langCodes = Object.keys(item);
-			const data = langCodes.reduce((acc, langCode) => {
-				acc[langCode] = item[langCode];
-
-				return acc;
-			}, {});
-
-			return {				
-				itemId,
-				category,
-				moduleId,
-				pageId,
-				data,
-			};
-		});
-
+		const langItems = hanleLangItems(params);
 
 		return (dispatch, getState) => {
 			const state = getState();
@@ -275,12 +285,13 @@ const ACTIONS = {
 	},
 	// 编辑i18词条
 	editLangItem: (params) => {
-
+		const langItems = hanleLangItems(params);
+		
 		return (dispatch, getState) => {
 			const state = getState();
 			const { langItem: { result, entities } } = state;
 
-			DB_MODEL['LangCode'].updateById(entities.list[params.langItem]._id, params)
+			DB_MODEL['LangCode'].updateById(entities.list[params.itemId]._id, langItems[0])
 				.then(data => {
 					// 更新数据库存储
 					db.save();
@@ -288,7 +299,7 @@ const ACTIONS = {
 
 			dispatch({
 				type: ACTION_TYPE.UPDATE_LANG_ITEM,
-				params
+				params: langItems[0],
 			})
 		};
 	},
