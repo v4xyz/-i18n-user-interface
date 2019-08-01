@@ -21,6 +21,32 @@ function loadDb() {
 	store.dispatch(ACTIONS.loadDb());		
 }
 
+function commit2Store({params, action, storeName, onSuccess = () => {}, onError = () => {}}) {
+
+	return new Promise((resolve, reject) => {
+
+		const unsubscribe = store.subscribe(() => {
+			try {
+				const { [storeName] : { result, entities } } = store.getState()
+				// console.log(store.getState())
+
+				resolve(onSuccess({result, entities, params}));
+				unsubscribe();
+			} catch (e) {
+				reject(onError(e));
+				unsubscribe();
+			}			
+		});
+
+		try { 
+			store.dispatch(action(params));
+		} catch (e) {
+			reject(onError(e));
+			unsubscribe();
+		}
+	});	
+}
+
 /***---语种 start---***/
 /**
  * 获取语种列表
@@ -28,20 +54,20 @@ function loadDb() {
  * @return {[type]}        [description]
  */
 function getLangCodeList(params) {
+	const storeName = 'langCode';
 
-	return new Promise((resolve, reject) => {
+	return commit2Store({
+		params,
+		action: ACTIONS.getLangCodeList,
+		storeName,
+		onSuccess: ({result, entities, params}) => {
 
-		const unsubscribe = store.subscribe(() => {
-			const { langCode : { result, entities } } = store.getState()
-			console.log(store.getState())
-			resolve(util.formatListResp({
-				list: denormalize(result, [SCHEMAS.langCode], entities),
+			return util.formatListResp({
+				list: denormalize(result, [SCHEMAS[storeName]], entities),
 				total: result.length,
 				params,
-			}));
-			unsubscribe();
-		});
-		store.dispatch(ACTIONS.getLangCodeList(params));
+			})
+		}
 	});
 }
 
@@ -51,17 +77,17 @@ function getLangCodeList(params) {
  * @return {[type]}        [description]
  */
 function getLangCodeDetail(params) {
+	const storeName = 'langCode';
 
-	return new Promise((resolve, reject) => {
+	return commit2Store({
+		params,
+		action: ACTIONS.getLangCodeDetail,
+		storeName,
+		onSuccess: ({result, entities, params}) => {
 
-		const unsubscribe = store.subscribe(() => {
-			const { langCode : { result, entities } } = store.getState()
-			console.log(store.getState())
-			resolve(entities.list[params.langCode] || {});
-			unsubscribe();
-		});
-		store.dispatch(ACTIONS.getLangCodeDetail(params));
-	});
+			return entities.list[params.langCode] || {}
+		}
+	});	
 }
 
 /**
@@ -70,17 +96,17 @@ function getLangCodeDetail(params) {
  * @return {[type]}        [description]
  */
 function addLangCode(params) {
+	const storeName = 'langCode';
 
-	return new Promise((resolve, reject) => {
+	return commit2Store({
+		params,
+		action: ACTIONS.addLangCode,
+		storeName,
+		onSuccess: ({result, entities, params}) => {
 
-		const unsubscribe = store.subscribe(() => {
-			const { langCode : { result, entities } } = store.getState()
-			console.log(store.getState())
-			resolve(entities.list[params.langCode] || {});
-			unsubscribe();
-		});
-		store.dispatch(ACTIONS.addLangCode(params));
-	});
+			return entities.list[params.langCode] || {}
+		}
+	});		
 }
 
 /**
@@ -89,17 +115,17 @@ function addLangCode(params) {
  * @return {[type]}        [description]
  */
 function editLangCode(params) {
+	const storeName = 'langCode';
 
-	return new Promise((resolve, reject) => {
+	return commit2Store({
+		params,
+		action: ACTIONS.editLangCode,
+		storeName,
+		onSuccess: ({result, entities, params}) => {
 
-		const unsubscribe = store.subscribe(() => {
-			const { langCode : { result, entities } } = store.getState()
-			console.log(store.getState())
-			resolve(entities.list[params.langCode] || {});
-			unsubscribe();
-		});
-		store.dispatch(ACTIONS.editLangCode(params));
-	});
+			return entities.list[params.langCode] || {}
+		}
+	});		
 }
 
 /**
@@ -120,21 +146,21 @@ function delLangCode(params) {
  * @return {[type]}        [description]
  */
 function getLangCategoryList(params) {
+	const storeName = 'langCategory';
 
-	return new Promise((resolve, reject) => {
+	return commit2Store({
+		params,
+		action: ACTIONS.getLangCategoryList,
+		storeName,
+		onSuccess: ({result, entities, params}) => {
 
-		const unsubscribe = store.subscribe(() => {
-			const { langCategory : { result, entities } } = store.getState()
-			console.log(store.getState())
-			resolve(util.formatListResp({
-				list: denormalize(result, [SCHEMAS.langCategory], entities),
+			return util.formatListResp({
+				list: denormalize(result, [SCHEMAS[storeName]], entities),
 				total: result.length,
 				params,
-			}));
-			unsubscribe();
-		});
-		store.dispatch(ACTIONS.getLangCategoryList(params));
-	});
+			})
+		}
+	});	
 }
 
 /**
@@ -143,17 +169,17 @@ function getLangCategoryList(params) {
  * @return {[type]}        [description]
  */
 function getLangCategoryDetail(params) {
+	const storeName = 'langCategory';
 
-	return new Promise((resolve, reject) => {
+	return commit2Store({
+		params,
+		action: ACTIONS.getLangCategoryDetail,
+		storeName,
+		onSuccess: ({result, entities, params}) => {
 
-		const unsubscribe = store.subscribe(() => {
-			const { langCategory : { result, entities } } = store.getState()
-			console.log(store.getState())
-			resolve(entities.list[params.prefix] || {});
-			unsubscribe();
-		});
-		store.dispatch(ACTIONS.getLangCategoryDetail(params));
-	});
+			return entities.list[params.prefix] || {}
+		}
+	});		
 }
 
 /**
@@ -162,16 +188,16 @@ function getLangCategoryDetail(params) {
  * @return {[type]}        [description]
  */
 function addLangCategory(params) {
+	const storeName = 'langCategory';
 
-	return new Promise((resolve, reject) => {
+	return commit2Store({
+		params,
+		action: ACTIONS.addLangCategory,
+		storeName,
+		onSuccess: ({result, entities, params}) => {
 
-		const unsubscribe = store.subscribe(() => {
-			const { langCategory : { result, entities } } = store.getState()
-			console.log(store.getState())
-			resolve(entities.list[params.langCategory] || {});
-			unsubscribe();
-		});
-		store.dispatch(ACTIONS.addLangCategory(params));
+			return entities.list[params.prefix] || {}
+		}
 	});
 }
 
@@ -181,17 +207,17 @@ function addLangCategory(params) {
  * @return {[type]}        [description]
  */
 function editLangCategory(params) {
+	const storeName = 'langCategory';
 
-	return new Promise((resolve, reject) => {
+	return commit2Store({
+		params,
+		action: ACTIONS.editLangCategory,
+		storeName,
+		onSuccess: ({result, entities, params}) => {
 
-		const unsubscribe = store.subscribe(() => {
-			const { langCategory : { result, entities } } = store.getState()
-			console.log(store.getState())
-			resolve(entities.list[params.langCategory] || {});
-			unsubscribe();
-		});
-		store.dispatch(ACTIONS.editLangCategory(params));
-	});
+			return entities.list[params.prefix] || {}
+		}
+	});	
 }
 
 /**
@@ -212,20 +238,20 @@ function delLangCategory(params) {
  * @return {[type]}        [description]
  */
 function getLangItemList(params) {
+	const storeName = 'langItem';
 
-	return new Promise((resolve, reject) => {
+	return commit2Store({
+		params,
+		action: ACTIONS.getLangItemList,
+		storeName,
+		onSuccess: ({result, entities, params}) => {
 
-		const unsubscribe = store.subscribe(() => {
-			const { langItem : { result, entities } } = store.getState()
-			console.log(store.getState())
-			resolve(util.formatListResp({
-				list: denormalize(result, [SCHEMAS.langItem], entities),
+			return util.formatListResp({
+				list: denormalize(result, [SCHEMAS[storeName]], entities),
 				total: result.length,
 				params,
-			}));
-			unsubscribe();
-		});
-		store.dispatch(ACTIONS.getLangItemList(params));
+			})
+		}
 	});
 }
 
@@ -235,17 +261,17 @@ function getLangItemList(params) {
  * @return {[type]}        [description]
  */
 function getLangItemDetail(params) {
+	const storeName = 'langItem';
 
-	return new Promise((resolve, reject) => {
+	return commit2Store({
+		params,
+		action: ACTIONS.getLangItemDetail,
+		storeName,
+		onSuccess: ({result, entities, params}) => {
 
-		const unsubscribe = store.subscribe(() => {
-			const { langItem : { result, entities } } = store.getState()
-			console.log(store.getState())
-			resolve(entities.list[params.itemId] || {});
-			unsubscribe();
-		});
-		store.dispatch(ACTIONS.getLangItemDetail(params));
-	});
+			return entities.list[params.itemId] || {}
+		}
+	});	
 }
 
 /**
@@ -254,17 +280,17 @@ function getLangItemDetail(params) {
  * @return {[type]}        [description]
  */
 function addLangItem(params) {
+	const storeName = 'langItem';
 
-	return new Promise((resolve, reject) => {
+	return commit2Store({
+		params,
+		action: ACTIONS.addLangItem,
+		storeName,
+		onSuccess: ({result, entities, params}) => {
 
-		const unsubscribe = store.subscribe(() => {
-			const { langItem : { result, entities } } = store.getState()
-			console.log(store.getState())
-			resolve(entities.list[params.langItem] || {});
-			unsubscribe();
-		});
-		store.dispatch(ACTIONS.addLangItem(params));
-	});
+			return entities.list[params.itemId] || {}
+		}
+	});		
 }
 
 /**
@@ -273,17 +299,17 @@ function addLangItem(params) {
  * @return {[type]}        [description]
  */
 function editLangItem(params) {
+	const storeName = 'langItem';
 
-	return new Promise((resolve, reject) => {
+	return commit2Store({
+		params,
+		action: ACTIONS.editLangItem,
+		storeName,
+		onSuccess: ({result, entities, params}) => {
 
-		const unsubscribe = store.subscribe(() => {
-			const { langCode : { result, entities } } = store.getState()
-			console.log(store.getState())
-			resolve(entities.list[params.langCode] || {});
-			unsubscribe();
-		});
-		store.dispatch(ACTIONS.editLangItem(params));
-	});
+			return entities.list[params.itemId] || {}
+		}
+	});		
 }
 
 /**
