@@ -256,15 +256,23 @@ function getLangItemList(params = pageParams) {
 		action: ACTIONS.getLangItemList,
 		storeName,
 		onSuccess: ({result, entities, params}) => {
-			const { page, limit, itemId, category, moduleId, pageId } = params;
+			const { page, limit, itemId = '', category = '', moduleId = '', pageId = '' } = params;
 			const langItems =  denormalize(result, [SCHEMAS[storeName]], entities)
 								.filter(item => {
 									// 按itemId查找
 									return item.itemId.startsWith(itemId);
 								})
 								.filter(item => {
-									// 按prefix查找
+									// 按category查找
 									return item.category.startsWith(category);
+								})
+								.filter(item => {
+									// 按moduleId查找
+									return item.moduleId.startsWith(moduleId);
+								})
+								.filter(item => {
+									// 按pageId查找
+									return item.pageId.startsWith(pageId);
 								})
 			const total = langItems.length;
 			const validPage = page < 1 ? 0 : (page > Math.floor(total/limit) ? Math.floor(total/limit) : page - 1);
