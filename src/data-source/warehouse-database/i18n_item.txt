@@ -66,3 +66,7 @@ PAGE-012003-005_词条内容_詞條内容_Item Content
 PAGE-012004-001_所属模块_所屬模塊_Related Module
 PAGE-012004-002_分类_分类_Category
 PAGE-012004-003_分类前缀_分类前缀_Category Prefix
+APP-AUTH-BTN-SYNC-I18N_同步本地词条_同步本地詞條_Sync Local I18N Files
+APP-OPTION-ALL_全部_全部_All
+APP-OPTION-DEFAULT_默认_默认_Default
+APP-OPTION-NONE_空_空_None

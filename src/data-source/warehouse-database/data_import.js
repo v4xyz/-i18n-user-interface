@@ -37,8 +37,8 @@ fs.readFile(rawFile, (err, data) => {
 			const category = prefixTypes.find(prefix => {
 				return itemName.startsWith(prefix);
 			});
-			const moduleId = category === 'PAGE-' ? itemName.split('-')[1] : '';
-			const pageId = category === 'PAGE-' ? itemName.split('-')[2] : '';
+			const moduleId = category === 'PAGE-' ? itemName.split('-')[1].slice(0, 3) : '';
+			const pageId = category === 'PAGE-' ? itemName.split('-')[1] : '';
 
 			langItems.push({
 				itemId: itemName,
@@ -54,9 +54,12 @@ fs.readFile(rawFile, (err, data) => {
 	});
 	
 	console.log(langItems);
-	DB_MODEL['LangItem'].insert(langItems).then(data => {
+	db.load().then(() => {
+		
+		DB_MODEL['LangItem'].insert(langItems).then(data => {
 
-		db.save();
+			db.save();
+		});
 	});
 	// console.log(i18nData['zh_HK'].join('\n'))
 	// i18nCodes.forEach(i18nCode => {
@@ -73,4 +76,5 @@ fs.readFile(rawFile, (err, data) => {
 	// 		console.log(t_filename, 'write ok ...')
 	// 	});
 	// });
+	
 });

@@ -51,8 +51,8 @@ function hanleLangItems(params) {
 		return {				
 			itemId,
 			category,
-			moduleId,
-			pageId,
+			moduleId: category === 'PAGE-' ? moduleId : '',
+			pageId: category === 'PAGE-' ? pageId : '',
 			data,
 		};
 	});
