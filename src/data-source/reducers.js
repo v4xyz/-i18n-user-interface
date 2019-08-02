@@ -113,7 +113,7 @@ function langItem(state = {}, action) {
 		[ACTION_TYPE.DATABASE_LOADED]: () => {
 			return action.params.langItem;
 		},
-		[ACTION_TYPE.GET_LANG_ITEM_LIST]: () => {
+		[ACTION_TYPE.GET_LANG_ITEM_LIST]: () => {			
 			return state;
 		},
 		[ACTION_TYPE.GET_LANG_ITEM_DETAIL]: () => {

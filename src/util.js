@@ -10,7 +10,7 @@ function formatListResp({list, total, params}) {
 	return  {
 		rows: list,
 		total,
-		pageIndex: params.page,
+		pageIndex: params.page || 1,
 	}
 }
 

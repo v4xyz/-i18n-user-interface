@@ -11,7 +11,7 @@ const store = createStore(combineReducers(reducers), applyMiddleware(...middleWa
 const { normalize, denormalize } = require('normalizr');
 const { SCHEMAS, ACTIONS } = require('./actions');
 const util = require('../util');
-
+const pageParams = { page: 1, limit: 10 };
 /**
  * 载入数据库数据
  * @return {[type]} [description]
@@ -248,7 +248,7 @@ function delLangCategory(params) {
  * @param  {[type]} params [description]
  * @return {[type]}        [description]
  */
-function getLangItemList(params) {
+function getLangItemList(params = pageParams) {
 	const storeName = 'langItem';
 
 	return commit2Store({
@@ -256,11 +256,25 @@ function getLangItemList(params) {
 		action: ACTIONS.getLangItemList,
 		storeName,
 		onSuccess: ({result, entities, params}) => {
+			const { page, limit, itemId, category, moduleId, pageId } = params;
+			const langItems =  denormalize(result, [SCHEMAS[storeName]], entities)
+								.filter(item => {
+									// 按itemId查找
+									return item.itemId.startsWith(itemId);
+								})
+								.filter(item => {
+									// 按prefix查找
+									return item.category.startsWith(category);
+								})
+			const total = langItems.length;
+			const validPage = page < 1 ? 0 : (page > Math.floor(total/limit) ? Math.floor(total/limit) : page - 1);
 
 			return util.formatListResp({
-				list: denormalize(result, [SCHEMAS[storeName]], entities),
-				total: result.length,
-				params,
+				list: langItems.slice(validPage * limit, (validPage + 1) * limit),
+				total,
+				params: {
+					page: validPage,
+				},
 			})
 		}
 	});
