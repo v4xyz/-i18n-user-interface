@@ -23,7 +23,8 @@ const ACTION_TYPE = [
 	'ADD_LANG_ITEM', // 新增i18n词条
 	'BATCH_ADD_LANG_ITEM', // 批量新增i18n词条
 	'UPDATE_LANG_ITEM', // 编辑i18n词条
-	'DELETE_LANG_ITEM', // 删除i18n词条	
+	'DELETE_LANG_ITEM', // 删除i18n词条
+	'PREVIEW_I18N_FILE', // 预览国际化语言文件
 ].reduce((acc, item) => {
 	acc[item] = item
 
@@ -316,6 +317,14 @@ const ACTIONS = {
 			})
 		};
 	},
+	// 预览输出文件
+	previewDist: (params) => {		
+
+		return {
+			type: ACTION_TYPE.PREVIEW_I18N_FILE,
+			params,
+		}
+	}
 }
 
 module.exports = {

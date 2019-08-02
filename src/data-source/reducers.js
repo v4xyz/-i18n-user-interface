@@ -173,7 +173,11 @@ function langItem(state = {}, action) {
 		},
 		[ACTION_TYPE.DEL_LANG_ITEM]: () => {
 			return state;
-		},		
+		},
+		[ACTION_TYPE.PREVIEW_I18N_FILE]: () => {
+
+			return state;
+		},
 		default: () => {
 			return state
 		}

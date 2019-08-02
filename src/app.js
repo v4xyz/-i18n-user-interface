@@ -16,21 +16,24 @@ app.use(koaBody());
 app.use(async (ctx, next) => {
 
   await next();
-  const rows = ctx.body.rows;
-  // 屏蔽_id等字段 
-  if (Array.isArray(rows)) {
-    ctx.body.rows = rows.map(item => {
-      const newItem = { ...item };
-      delete newItem._id;
+  if (ctx.type === 'application/json') {
+    ctx.type = 'application/json; charset=utf-8';
+    const rows = ctx.body && ctx.body.rows;
+    // 屏蔽_id等字段 
+    if (Array.isArray(rows)) {
+      ctx.body.rows = rows.map(item => {
+        const newItem = { ...item };
+        delete newItem._id;
 
-      return newItem;
-    })
+        return newItem;
+      })
+    }
+    ctx.body = {
+       "success":true,
+       "obj": ctx.body,
+    };    
   }
-  ctx.body = {
-     "success":true,
-     "obj": ctx.body,
-  };
-  ctx.type = 'application/json; charset=utf-8';
+
 });
 // middleware配置 end
 
@@ -50,7 +53,8 @@ router.get('/', index)
   .get('/langItem/detail', getLangItemDetail)
   .post('/langItem/add', addLangItem)
   .post('/langItem/edit', editLangItem)
-  .post('/langItem/del', delLangItem);
+  .post('/langItem/del', delLangItem)
+  .get('/dist/:langCode.js', previewDist);
 
 app.use(router.routes());
 
@@ -149,6 +153,18 @@ async function delLangItem(ctx) {
   ctx.body = await controller.delLangItem();
 }
 /***---i18n词条   end---***/
+
+/**
+ * 预览国际化语言文件
+ * @param  {[type]} ctx [description]
+ * @return {[type]}     [description]
+ */
+async function previewDist(ctx, next) {
+
+    const params = ctx.params;    
+    ctx.type = 'application/javascript; charset=utf-8';
+    ctx.body = await controller.previewDist(params);    
+}
 
 async function index(ctx) {  
   ctx.type = 'text/html; charset=utf-8';

@@ -21,6 +21,15 @@ function loadDb() {
 	store.dispatch(ACTIONS.loadDb());		
 }
 
+/**
+ * 触发action到store获取最新的state
+ * @param  {[type]}   options.params    [description]
+ * @param  {[type]}   options.action    [description]
+ * @param  {[type]}   options.storeName [description]
+ * @param  {Function} options.onSuccess [description]
+ * @param  {Function} onError           [description]
+ * @return {[type]}                     [description]
+ */
 function commit2Store({params, action, storeName, onSuccess = () => {}, onError = () => {}}) {
 
 	return new Promise((resolve, reject) => {
@@ -33,6 +42,7 @@ function commit2Store({params, action, storeName, onSuccess = () => {}, onError 
 				resolve(onSuccess({result, entities, params}));
 				unsubscribe();
 			} catch (e) {
+				console.log(e)
 				reject(onError(e));
 				unsubscribe();
 			}			
@@ -41,6 +51,7 @@ function commit2Store({params, action, storeName, onSuccess = () => {}, onError 
 		try { 
 			store.dispatch(action(params));
 		} catch (e) {
+			console.log(e)
 			reject(onError(e));
 			unsubscribe();
 		}
@@ -323,6 +334,31 @@ function delLangItem(params) {
 }
 /***---i18词条   end---***/
 
+function previewDist(params) {
+	const storeName = 'langItem';
+
+	return commit2Store({
+		params,
+		action: ACTIONS.previewDist,
+		storeName,
+		onSuccess: ({result, entities, params}) => {
+			const { langCode } = params;
+			const langItems = util.formatListResp({
+				list: denormalize(result, [SCHEMAS[storeName]], entities),
+				total: result.length,
+				params,
+			});
+
+			return `export default {\r\n${ 
+				langItems.rows.map(langItem => {
+						const { itemId, data } = langItem;
+
+						return `    "${ itemId }": "${ data[langCode] }",`
+				}).join('\r\n') }\r\n};\r\n`
+		}
+	});	
+}
+
 module.exports = {
 	_store: store,
 	loadDb,
@@ -340,5 +376,6 @@ module.exports = {
 	getLangItemDetail,
 	addLangItem,
 	editLangItem,
-	delLangItem,		
+	delLangItem,
+	previewDist,
 };
