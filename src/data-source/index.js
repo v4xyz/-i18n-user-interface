@@ -11,7 +11,8 @@ const store = createStore(combineReducers(reducers), applyMiddleware(...middleWa
 const { normalize, denormalize } = require('normalizr');
 const { SCHEMAS, ACTIONS } = require('./actions');
 const util = require('../util');
-const pageParams = { page: 1, limit: 10 };
+const DEFAULT_PAGE = 1;
+const DEFAULT_LIMIT = 10;
 /**
  * 载入数据库数据
  * @return {[type]} [description]
@@ -248,7 +249,7 @@ function delLangCategory(params) {
  * @param  {[type]} params [description]
  * @return {[type]}        [description]
  */
-function getLangItemList(params = pageParams) {
+function getLangItemList(params) {
 	const storeName = 'langItem';
 
 	return commit2Store({
@@ -256,7 +257,7 @@ function getLangItemList(params = pageParams) {
 		action: ACTIONS.getLangItemList,
 		storeName,
 		onSuccess: ({result, entities, params}) => {
-			const { page, limit, itemId = '', category = '', moduleId = '', pageId = '' } = params;
+			const { page = DEFAULT_PAGE, limit = DEFAULT_LIMIT, itemId = '', category = '', moduleId = '', pageId = '' } = params;
 			const langItems =  denormalize(result, [SCHEMAS[storeName]], entities)
 								.filter(item => {
 									// 按itemId查找

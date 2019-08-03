@@ -33,7 +33,7 @@ fs.readFile(rawFile, (err, data) => {
 				i18nData[i18nCode].push(`"${ itemName }": "${ items[index + 1] || items[3] }",`);
 			});
 
-			const prefixTypes =  ["APP-POPUP-", "APP-FIELD-", "APP-FIELD-ERROR-", "APP-AUTH-BTN-", "APP-MENU-", "PAGE-", "COMMON"];
+			const prefixTypes =  ["APP-POPUP-", "APP-FIELD-", "APP-FIELDERROR-", "APP-AUTH-BTN-", "APP-MENU-", "PAGE-", "COMMON"];
 			const category = prefixTypes.find(prefix => {
 				return itemName.startsWith(prefix);
 			});
