@@ -357,6 +357,11 @@ function delLangItem(params) {
 }
 /***---i18词条   end---***/
 
+/**
+ * 生成js目标文件
+ * @param  {[type]} params [description]
+ * @return {[type]}        [description]
+ */
 function previewDist(params) {
 	const storeName = 'langItem';
 
@@ -366,18 +371,35 @@ function previewDist(params) {
 		storeName,
 		onSuccess: ({result, entities, params}) => {
 			const { langCode } = params;
-			const langItems = util.formatListResp({
-				list: denormalize(result, [SCHEMAS[storeName]], entities),
-				total: result.length,
-				params,
-			});
+			const langItems = denormalize(result, [SCHEMAS[storeName]], entities);
 
 			return `export default {\r\n${ 
-				langItems.rows.map(langItem => {
+				langItems.map(langItem => {
 						const { itemId, data } = langItem;
 
 						return `    "${ itemId }": "${ data[langCode] }",`
 				}).join('\r\n') }\r\n};\r\n`
+		}
+	});	
+}
+
+function exportRaw(params) {
+	const storeName = 'langItem';
+
+	return commit2Store({
+		params,
+		action: ACTIONS.exportRaw,
+		storeName,
+		onSuccess: ({result, entities, params}) => {
+			const { langCode } = params;
+			const langItems = denormalize(result, [SCHEMAS[storeName]], entities);
+
+			return `${ 
+				langItems.map(langItem => {
+						const { itemId, data } = langItem;
+
+						return `${ itemId }_${ data['zh_CN'] }_${ data['zh_HK'] }_${ data['en_US'] }`
+				}).join('\r\n') }\r\n`
 		}
 	});	
 }
@@ -401,4 +423,5 @@ module.exports = {
 	editLangItem,
 	delLangItem,
 	previewDist,
+	exportRaw,
 };

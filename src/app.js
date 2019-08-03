@@ -54,7 +54,8 @@ router.get('/', index)
   .post('/langItem/add', addLangItem)
   .post('/langItem/edit', editLangItem)
   .post('/langItem/del', delLangItem)
-  .get('/dist/:langCode.js', previewDist);
+  .get('/dist/:langCode.js', previewDist)
+  .get('/data/export/raw', exportRaw);
 
 app.use(router.routes());
 
@@ -164,6 +165,18 @@ async function previewDist(ctx, next) {
     const params = ctx.params;    
     ctx.type = 'application/javascript; charset=utf-8';
     ctx.body = await controller.previewDist(params);    
+}
+
+/**
+ * 导出原始文件
+ * @param  {[type]} ctx [description]
+ * @return {[type]}     [description]
+ */
+async function exportRaw(ctx) {
+    const params = ctx.params;
+
+    ctx.type = 'text/plain; charset=utf-8';
+    ctx.body = await controller.exportRaw(params);      
 }
 
 async function index(ctx) {  

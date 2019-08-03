@@ -25,6 +25,7 @@ const ACTION_TYPE = [
 	'UPDATE_LANG_ITEM', // 编辑i18n词条
 	'DELETE_LANG_ITEM', // 删除i18n词条
 	'PREVIEW_I18N_FILE', // 预览国际化语言文件
+	'EXPORT_RAW', // 导出原始文件
 ].reduce((acc, item) => {
 	acc[item] = item
 
@@ -323,6 +324,13 @@ const ACTIONS = {
 		return {
 			type: ACTION_TYPE.PREVIEW_I18N_FILE,
 			params,
+		}
+	},
+	exportRaw: (params) => {
+
+		return {
+			type: ACTION_TYPE.EXPORT_RAW,
+			params,			
 		}
 	}
 }
