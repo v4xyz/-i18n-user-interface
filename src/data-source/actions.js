@@ -26,6 +26,7 @@ const ACTION_TYPE = [
 	'DELETE_LANG_ITEM', // 删除i18n词条
 	'PREVIEW_I18N_FILE', // 预览国际化语言文件
 	'EXPORT_RAW', // 导出原始文件
+	'ERROR_ADD_DUPLICATE_LANG_ITEM', // 已存在相同的词条
 ].reduce((acc, item) => {
 	acc[item] = item
 
@@ -260,21 +261,29 @@ const ACTIONS = {
 		return (dispatch, getState) => {
 			const state = getState();
 			const { langItem: { entities, result } } = state;
+			const existingdKeys = langItems.filter(item => {
+				const { itemId } = item;
 
-			if (result.includes(params.langItem)) {
-				// 不能新增重复的langItem
-				dispatch({
+				return result.find(id => id === itemId)
+			}).map(item => item.itemId);
+
+			if (existingdKeys.length > 0) {
+				const executedParams = {
 					type: ACTION_TYPE.ERROR_ADD_DUPLICATE_LANG_ITEM,
 					params: {
-						langItems
+						err: {existingdKeys}
 					}
-				});
+				};
+				// 不能新增重复的langItem
+				dispatch(executedParams);
+				// 不用例会store变化 直接处理业务错误
+				throw executedParams;
 			} else {
-				DB_MODEL['LangItem'].insert(langItems)
-					.then(data => {
-						// 更新数据库存储
-						db.save();
-					});
+				// DB_MODEL['LangItem'].insert(langItems)
+				// 	.then(data => {
+				// 		// 更新数据库存储
+				// 		db.save();
+				// 	});
 
 				dispatch({
 					type: ACTION_TYPE.BATCH_ADD_LANG_ITEM,

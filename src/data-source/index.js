@@ -31,13 +31,19 @@ function loadDb() {
  * @param  {Function} onError           [description]
  * @return {[type]}                     [description]
  */
-function commit2Store({params, action, storeName, onSuccess = () => {}, onError = () => {}}) {
+function commit2Store({
+	params,
+	action,
+	storeName,
+	onSuccess = () => {},
+	onError = () => {}
+}) {
 
 	return new Promise((resolve, reject) => {
 
-		const unsubscribe = store.subscribe(() => {
+		const unsubscribe = store.subscribe(function() {
 			try {
-				const { [storeName] : { result, entities } } = store.getState()
+				const { [storeName] : { result, entities } } = store.getState();
 				// console.log(store.getState())
 
 				resolve(onSuccess({result, entities, params}));
@@ -46,13 +52,13 @@ function commit2Store({params, action, storeName, onSuccess = () => {}, onError 
 				console.log(e)
 				reject(onError(e));
 				unsubscribe();
-			}			
+			}
 		});
 
-		try { 
+		try {
 			store.dispatch(action(params));
 		} catch (e) {
-			console.log(e)
+			console.log(e);
 			reject(onError(e));
 			unsubscribe();
 		}
@@ -323,6 +329,10 @@ function addLangItem(params) {
 		onSuccess: ({result, entities, params}) => {
 
 			return entities.list[params.itemId] || {}
+		},
+		onError: (err) => {
+
+			return err
 		}
 	});		
 }

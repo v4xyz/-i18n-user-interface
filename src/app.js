@@ -127,7 +127,11 @@ async function delLangCategory(ctx) {
 async function getLangItemList(ctx) {
   const params = ctx.request.body;
 
-  ctx.body = await controller.getLangItemList(params);
+  try {
+    ctx.body = await controller.getLangItemList(params);
+  } catch (e) {
+    ctx.body = e;
+  }
 }
 
 async function getLangItemDetail(ctx) {
@@ -139,7 +143,12 @@ async function getLangItemDetail(ctx) {
 async function addLangItem(ctx) {
   const params = ctx.request.body;
 
-  ctx.body = await controller.addLangItem(params);
+  try {
+    ctx.body = await controller.addLangItem(params);
+    console.log(ctx.body)
+  } catch (e) {
+    ctx.body = e
+  }
 }
 
 async function editLangItem(ctx) {
