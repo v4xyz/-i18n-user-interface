@@ -1,0 +1,72 @@
+APP-POPUP-TITLE-ADD_新增{0}_新增{0}_Add {0}
+APP-POPUP-TITLE-EDIT_编辑{0}_編輯{0}_Edit{0}
+APP-POPUP-TITLE-DETAIL_详情{0}_詳情{0}_detials{0}
+APP-FIELD-ERROR-EMPTY_请输入正确的{0}_請輸入正確的{0}_Please input correct {0}
+APP-FIELD-0001_登录账号_登录账号_登录账号
+APP-FIELD-0002_员工名称_员工名称_员工名称
+APP-FIELD-0003_手机号_手机号_手机号
+APP-FIELD-0004_扩展字段_扩展字段_扩展字段
+APP-FIELD-0005_注册时间_注册时间_注册时间
+APP-FIELD-0006_用户状态_用户状态_用户状态
+APP-FIELD-0007_邮箱_邮箱_邮箱
+APP-FIELD-0008_角色名称_角色名称_角色名称
+APP-FIELD-0009_备注_备注_备注
+APP-FIELD-0010_创建时间_创建时间_创建时间
+APP-FIELD-0011_角色权限_角色权限_角色权限
+APP-FIELD-0012_创建人_創建人_Created By
+APP-FIELD-0013_角色_角色_Role
+APP-FIELD-0014_员工_員工_Employee
+APP-FIELD-0015_机构编号_機構編號_机构编号
+APP-FIELD-0016_机构名称_機構名稱_机构名称
+APP-FIELD-0017_本币币种_本幣幣種_本币币种
+APP-FIELD-0018_时区_時區_时区
+APP-FIELD-0019_更新人_更新人_更新人
+APP-FIELD-0020_更新时间_更新時間_更新时间
+APP-FIELD-0021_机构_機構_机构
+APP-FIELD-0022_用户类型_用户类型_用户类型
+APP-AUTH-BTN-ADD_新增_新增_Add
+APP-AUTH-BTN-SEARCH_查询_查詢_Search
+APP-AUTH-BTN-EDIT_编辑_編輯_Edit
+APP-AUTH-BTN-DEL_删除_刪除_Delete
+APP-MENU-020_资料管理_资料管理_资料管理
+APP-MENU-020001_机构管理_机构管理_机构管理
+PAGE-020001-001_免密支付次数_免密支付次數_免密支付次数
+PAGE-020001-002_免密支付金额_免密支付金額_免密支付金额
+PAGE-020001-003_单一用户最大绑卡次数_單一用戶最大綁卡次數_单一用户最大绑卡次数
+PAGE-020001-004_不限_不限_不限
+PAGE-020001-005_更改尚未保存，确定关闭吗？_更改尚未保存，確定關閉嗎？_更改尚未保存，确定关闭吗？
+APP-MENU-021_用户管理_用戶管理_User Mgmt
+APP-MENU-021001_用户列表_用户列表_用户列表
+APP-MENU-021002_绑卡管理_绑卡管理_绑卡管理
+APP-MENU-022_交易管理_交易管理_交易管理
+APP-MENU-022001_充值订单_充值订单_充值订单
+APP-MENU-022002_转账订单_转账订单_转账订单
+APP-MENU-022003_收款订单_收款订单_收款订单
+APP-MENU-010_系统管理_系统管理_系统管理
+APP-MENU-010001_角色管理_角色管理_Role Mgmt
+APP-MENU-010002_员工管理_員工管理_Employee Mgmt
+PAGE-010002-001_可授予角色_可授予角色_Granting roles
+PAGE-010002-002_已授予角色_已授予角色_Been granted roles
+APP-MENU-012_多语言维护_多語言維護_I18N Setting
+APP-MENU-012001_语种编码_语种编码_Language Code
+APP-MENU-012002_术语词典_術語詞典_Business Term
+APP-MENU-012003_国际化词条_國際化詞條_I18N Item
+APP-MENU-012004_词条分类_詞條分類_Item Category
+PAGE-012001-001_语种_語種_Language
+PAGE-012001-002_语种编码_语种编码_Language Code
+PAGE-012001-003_参考语种_參考语种_Reference Language
+PAGE-012001-004_是否启用_是否啓用_Enable/Disable
+PAGE-012001-005_默认语种_默認語種_Default Language
+PAGE-012002-001_术语_術語_Terminology
+PAGE-012003-001_词条ID_詞條ID_Term ID
+PAGE-012003-002_词条分类_詞條分類_Item Category
+PAGE-012003-003_所属模块_所屬模塊_Related Module
+PAGE-012003-004_所属页面_所屬頁面_Related Page
+PAGE-012003-005_词条内容_詞條内容_Item Content
+PAGE-012004-001_所属模块_所屬模塊_Related Module
+PAGE-012004-002_分类_分类_Category
+PAGE-012004-003_分类前缀_分类前缀_Category Prefix
+APP-AUTH-BTN-SYNC-I18N_同步本地词条_同步本地詞條_Sync Local I18N Files
+APP-OPTION-ALL_全部_全部_All
+APP-OPTION-DEFAULT_默认_默认_Default
+APP-OPTION-NONE_空_空_None
