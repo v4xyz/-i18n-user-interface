@@ -268,22 +268,18 @@ const ACTIONS = {
 			}).map(item => item.itemId);
 
 			if (existingdKeys.length > 0) {
-				const executedParams = {
-					type: ACTION_TYPE.ERROR_ADD_DUPLICATE_LANG_ITEM,
-					params: {
-						err: {existingdKeys}
-					}
-				};
+				// 不需要触发任何action到store
 				// 不能新增重复的langItem
-				dispatch(executedParams);
-				// 不用例会store变化 直接处理业务错误
-				throw executedParams;
+				throw {
+					errorCode: ACTION_TYPE.ERROR_ADD_DUPLICATE_LANG_ITEM,
+					data: {existingdKeys},
+				};
 			} else {
-				// DB_MODEL['LangItem'].insert(langItems)
-				// 	.then(data => {
-				// 		// 更新数据库存储
-				// 		db.save();
-				// 	});
+				DB_MODEL['LangItem'].insert(langItems)
+					.then(data => {
+						// 更新数据库存储
+						db.save();
+					});
 
 				dispatch({
 					type: ACTION_TYPE.BATCH_ADD_LANG_ITEM,

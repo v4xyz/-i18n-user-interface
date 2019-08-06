@@ -35,8 +35,8 @@ function commit2Store({
 	params,
 	action,
 	storeName,
-	onSuccess = () => {},
-	onError = () => {}
+	onSuccess = (data) => data,
+	onError = (err) => err,
 }) {
 
 	return new Promise((resolve, reject) => {
@@ -50,7 +50,7 @@ function commit2Store({
 				unsubscribe();
 			} catch (e) {
 				console.log(e)
-				reject(onError(e));
+				resolve(onError(e));
 				unsubscribe();
 			}
 		});
@@ -59,7 +59,7 @@ function commit2Store({
 			store.dispatch(action(params));
 		} catch (e) {
 			console.log(e);
-			reject(onError(e));
+			resolve(onError(e));
 			unsubscribe();
 		}
 	});	
@@ -328,12 +328,8 @@ function addLangItem(params) {
 		storeName,
 		onSuccess: ({result, entities, params}) => {
 
-			return entities.list[params.itemId] || {}
+			return {};
 		},
-		onError: (err) => {
-
-			return err
-		}
 	});		
 }
 

@@ -28,10 +28,18 @@ app.use(async (ctx, next) => {
         return newItem;
       })
     }
-    ctx.body = {
-       "success":true,
-       "obj": ctx.body,
-    };    
+    if (ctx.body.errorCode) {
+      ctx.body = {
+         "success": false,
+         "obj": ctx.body.data,
+         errorCode: ctx.body.errorCode,
+      };  
+    } else {
+      ctx.body = {
+         "success": true,
+         "obj": ctx.body,
+      };    
+    }
   }
 
 });
@@ -127,11 +135,7 @@ async function delLangCategory(ctx) {
 async function getLangItemList(ctx) {
   const params = ctx.request.body;
 
-  try {
-    ctx.body = await controller.getLangItemList(params);
-  } catch (e) {
-    ctx.body = e;
-  }
+  ctx.body = await controller.getLangItemList(params);
 }
 
 async function getLangItemDetail(ctx) {
@@ -144,10 +148,9 @@ async function addLangItem(ctx) {
   const params = ctx.request.body;
 
   try {
-    ctx.body = await controller.addLangItem(params);
-    console.log(ctx.body)
+    ctx.body = await controller.addLangItem(params);    
   } catch (e) {
-    ctx.body = e
+    ctx.body = e;
   }
 }
 
